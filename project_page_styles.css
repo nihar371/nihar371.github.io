@@ -1,0 +1,118 @@
+#project-button {
+  background-color: #f65454;
+}
+#project-button a span {
+  color: #000000;
+}
+
+/* Projects Section */
+.projects-section {
+  transition: all 0.5s ease;
+  z-index: 1;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.projects-section.active {
+  left: 0;
+  /* position: relative; */
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.project-card {
+  background-color: #1B263B; /* Secondary Dark */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur( 2px );
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+}
+
+.project-card h3 {
+  font-size: 1.5rem;
+  color: #ff6e58; /* Light Background */
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.project-card p {
+  font-size: 1rem;
+  color: #e0e1e3; /* Secondary Accent */
+  margin-bottom: 15px;
+}
+
+.project-link {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #415A77; /* Primary Accent */
+  color: #E0E1DD; /* Light Background */
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.project-link:hover {
+  background-color: #1B263B; /* Secondary Dark */
+}
+
+
+/* Thumbnail Background */
+.project-thumbnail {
+    height: 200px; /* Adjust height as needed */
+    background-size: cover; /* Ensure the image covers the area */
+    background-position: center; /* Center the image */
+    position: relative;
+    border-radius: 15px;
+}
+
+/* Project Content */
+.project-content {
+    padding: 20px;
+    position: relative;
+    z-index: 1; /* Ensure content is above the thumbnail */
+    color: #fff; /* Light text for contrast */
+}
+
+/* Project Title */
+.project-content h3 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+}
+
+/* Project Description */
+.project-content p {
+    margin: 0 0 15px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Button */
+.project-content button {
+    background: #007bff; /* Blue button */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.project-content button:hover {
+    background: #0056b3; /* Darker blue on hover */
+}
