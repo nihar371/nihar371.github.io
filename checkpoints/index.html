@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+  </style>
+</head>
+<body>
+  <!-- Top Section -->
+  <div class="top-section">
+    <div class="profile-container">
+      <!-- Circular Image -->
+      <div class="profile-image">
+        <img src="assets\images\profile\my-profile-image.jpg" alt="Your Name">
+      </div>
+      <!-- Intro and Buttons -->
+      <div class="intro">
+        <h1>Nihar Patel</h1>
+        <p>Machine Learning Engineer | Building intelligent systems to solve real-world problems.</p>
+        <div class="buttons">
+          <a href="mailto:niharjpatel372001@gmail.com" class="btn"><img src="assets\images\icons\mail-logo.png" alt="mailto:niharjpatel372001@gmail.com"></a>
+          <a href="https://www.linkedin.com/in/niharpatel371/" target="_blank" class="btn"><img src="assets\images\icons\linkedin-logo.png" alt="LinkedIn:niharpatel371"></a>
+          <a href="https://github.com/Nihar-Patel-371" target="_blank" class="btn"><img src="assets\images\icons\github-logo.png" alt="GitHub:Nihar-Patel-371"></a>
+          <a href="https://nihar-patel.medium.com/" target="_blank" class="btn"><img src="assets\images\icons\medium-logo.png" alt="Medium:nihar-patel"></a>
+          <a href="https://www.kaggle.com/niharpatel03" target="_blank" class="btn"><img src="assets\images\icons\kaggle-logo.png" alt="Kaggle:niharpatel03"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline Container -->
+  <div class="timeline-container">
+    <!-- Work Experience Timeline -->
+    <div class="timeline">
+      <h2 class="timeline-title">Work Experience</h2>
+      <!-- Timeline Item 1 -->
+      <div class="timeline-item">
+        <div class="timeline-org">
+          <div class="timeline-logo">
+            <img src="assets\images\logos\effe-studio-logo.png" alt="EFFE Studio">
+          </div>
+          <p class="org-name">EFFE Studio Pvt. Ltd. <br><span class="timeline-date">Feb. 2023 – Jun. 2023</span></p>
+        </div>
+        <div class="timeline-org-card">
+          <h3>Software Developer Intern</h3>
+          <ul>
+            <li>Led a team of five developers and 3D artists using JIRA, focusing on scripting game mechanics and data analysis in C# and Unity.</li>
+            <li>Integrated database and authentication systems using Google Cloud Auth 2.0 and Firebase through GCP console API calls.</li>
+            <li>Analyzed sales data, including critics’ reviews and comments, using Tableau to gain insights for further improvements.</li>
+            <li>Implemented ML-Agents and Dynamic NavMesh Pathfinding utilizing reinforcement learning and A* Algorithm under the hood.</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Timeline Item 2 -->
+      <div class="timeline-item">
+        <div class="timeline-org">
+          <div class="timeline-logo">
+            <img src="assets\images\logos\micxn-lab-logo.png" alt="MICxN Laboratory">
+          </div>
+          <p class="org-name">MICxN Laboratory <br><span class="timeline-date">May 2021 – Jul. 2021</span></p>
+        </div>
+        <div class="timeline-org-card">
+          <h3>Undergraduate Research Intern</h3>
+          <ul>
+            <li>Studied and analyzed the impacts of the 5G network on mobility within the Intelligent Transport System (ITS) sub-domain.</li>
+            <li>Conducted simulation models using traffic simulators like SUMO and PTV-VISSIM, and networking tools such as NS-3.</li>
+            <li>Applied advanced machine learning algorithms, including Spatio-Temporal Graph Convolutional Networks (STGCNN).</li>
+            <li>Analyzed clustering algorithms on networking protocols such as AODV, OLSR, DSDV, and DSR for the Freeway mobility model.</li>
+            <li>Performed advanced analysis and monitoring of each node using Flow-monitor and 5G-LENA dependency in NS-3 on Ubuntu.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education Timeline -->
+    <div class="timeline">
+      <h2 class="timeline-title">Education</h2>
+      <!-- Timeline Item 1 -->
+      <div class="timeline-item">
+        <div class="timeline-org">
+          <div class="timeline-logo">
+            <img src="assets\images\logos\stevens-logo.png" alt="Stevens Institute of Technology">
+          </div>
+          <p class="org-name">Stevens Institute of Technology <br><span class="timeline-date">Sep. 2023 – Present</span></p>
+        </div>
+        <div class="timeline-org-card">
+          <h3>Master of Science (M.S.) in Data Science</h3>
+          <ul>
+            <li>Provost Scholarship: Received a Merit-based scholarship of 8,000 USD.</li>
+            <li>CGPA: 3.9/4.0</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Timeline Item 2 -->
+      <div class="timeline-item">
+        <div class="timeline-org">
+          <div class="timeline-logo">
+            <img src="assets\images\logos\ahmedabad-uni-logo.png" alt="Ahmedabad University">
+          </div>
+          <p class="org-name">Ahmedabad University <br><span class="timeline-date">Aug. 2019 – May 2023</span></p>
+        </div>
+        <div class="timeline-org-card">
+          <h3>Bachelor of Science (B.S.) in Computer Science, Minors in Business Analytics</h3>
+          <ul>
+            <li>CGPA: 3.0/4.0</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  
+
+    <!-- Projects Button -->
+    <div class="projects-button" id="projectsButton">
+      <span>Projects</span>
+    </div>
+  
+    <!-- Projects Section -->
+    <div class="projects-section" id="projectsSection">
+      <h2 class="projects-title">Projects</h2>
+      <div class="projects-grid">
+        <!-- Project Card 1 -->
+        <div class="project-card">
+          <h3>Project Title 1</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 2 -->
+        <div class="project-card">
+          <h3>Project Title 2</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 3 -->
+        <div class="project-card">
+          <h3>Project Title 3</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 1 -->
+        <div class="project-card">
+          <h3>Project Title 1</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 2 -->
+        <div class="project-card">
+          <h3>Project Title 2</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 3 -->
+        <div class="project-card">
+          <h3>Project Title 3</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 1 -->
+        <div class="project-card">
+          <h3>Project Title 1</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 2 -->
+        <div class="project-card">
+          <h3>Project Title 2</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 3 -->
+        <div class="project-card">
+          <h3>Project Title 3</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 1 -->
+        <div class="project-card">
+          <h3>Project Title 1</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 2 -->
+        <div class="project-card">
+          <h3>Project Title 2</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 3 -->
+        <div class="project-card">
+          <h3>Project Title 3</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 1 -->
+        <div class="project-card">
+          <h3>Project Title 1</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 2 -->
+        <div class="project-card">
+          <h3>Project Title 2</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Project Card 3 -->
+        <div class="project-card">
+          <h3>Project Title 3</h3>
+          <p>Short description of the project. Highlight key technologies and outcomes.</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+        <!-- Add more project cards as needed -->
+      </div>
+    </div>
+  
+    <!-- JavaScript for Projects Section -->
+    <script>
+      const projectsButton = document.getElementById('projectsButton');
+      const projectsSection = document.getElementById('projectsSection');
+      const timelineContainer = document.getElementsByClassName("timeline-container")[0];
+      // print(timelineContainer)
+  
+      projectsButton.addEventListener('click', () => {
+        projectsButton.classList.toggle('active');
+        projectsSection.classList.toggle('active');
+        timelineContainer.classList.toggle('hidden'); // Hide timeline when projects are visible
+      });
+
+      function setMarginBasedOnDivHeight() {
+      const referenceDiv = document.getElementsByClassName("top-section")[0];
+      const targetDiv = document.getElementsByClassName("timeline-container")[0];
+      const targetDiv1 = document.getElementById("projectsSection");
+
+      // Get the height of the reference div
+      const referenceDivHeight = referenceDiv.offsetHeight;
+
+      // Set the margin of the target div
+      targetDiv.style.marginTop = referenceDivHeight + "px";
+      targetDiv1.style.marginTop = referenceDivHeight + "px";
+    }
+
+    // Call the function initially and on window resize
+    setMarginBasedOnDivHeight();
+    window.addEventListener("resize", setMarginBasedOnDivHeight);
+    </script>
+
+</body>
+</html>
