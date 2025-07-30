@@ -1,12 +1,11 @@
-# Ohh! Hii, want to know more about me <br>
+# Ohh! Hi there, wanted to know more about me <br>
 
 <div style="display: flex;">
   <img src="./REDME_assets/hey_get_over_here.gif" alt="A character waving 'hello'" style="height: 150px; object-fit: contain;">
   <img src="./REDME_assets/closer.gif" alt="Another character beckoning someone closer" style="height: 150px; object-fit: contain;">
 </div>
 
-
-## Check this OUT!!! [PORTFOLIO](https://nihar371.github.io/portfolio/) (you know... just to know me better)
+## Check this OUT!!! [PORTFOLIO](https://nihar371.github.io/portfolio/)
 
 
 <div style="display: flex;">
