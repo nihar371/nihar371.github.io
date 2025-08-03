@@ -125,30 +125,88 @@ body {
   justify-content: space-around;
 }
 
+/* Make buttons flexible and responsive */
 .social-button {
-  padding: 2px 2px;
-  height: 30px;
-  width: 60px;
-  text-decoration: none;
-  box-shadow: 0 2px 4px 1px #dbe7eecf;
-  border-radius: 20px;
-  background:#e0e1dd14;
-  transition: 0.3s ease;
+  position: relative;
+  flex: 1 1 60px; /* Allows shrinking/growing with a base width */
+  max-width: 60px;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #282828, #202020);
+  box-shadow: 
+    inset -8px 0 8px rgba(0, 0, 0, 0.15),
+    inset 0 -8px 8px rgba(0, 0, 0, 0.25),
+    0 0 0 2px rgba(0, 0, 0, 0.75),
+    10px 20px 25px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease-in-out;
+  transition: box-shadow 0.25s ease, transform 0.05s ease-in-out;
 }
 
-.social-button:hover {
-  padding-top: 2px;
-  padding-bottom: 0px;
-  margin-top: 2px;
-  background: radial-gradient(#edededbd, #6c6c6c);
+.social-button::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  bottom: 14px;
+  right: 12px;
+  background: linear-gradient(90deg, #232323, #4a4a4a);
+  border-radius: 10px;
+  box-shadow: 
+    -10px -10px 10px rgba(255, 255, 255, 0.25),
+    10px 5px 10px rgba(0, 0, 0, 0.15);
+  border-left: 1px solid #0004;
+  border-bottom: 1px solid #0004;
+  border-top: 1px solid #0009;
+  transition: all 0.1s ease-in-out;
+  z-index: 0;
 }
 
+/* Responsive icon sizing */
 .social-button img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100%;
-  object-fit: fill;
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  z-index: 1;
+  position: relative;
+  pointer-events: none;
+  align-self: flex-start;
+  margin-top: 12%;
+  margin-left: -8%;
+}
+
+/* ✨ Glow effect on hover */
+.social-button:hover {
+  box-shadow:
+    inset -8px 0 8px rgba(0, 0, 0, 0.15),
+    inset 0 -8px 8px rgba(0, 0, 0, 0.25),
+    0 0 10px 2px rgba(255, 255, 255, 0.2),
+    0 0 20px 4px rgba(255, 255, 255, 0.1),
+    10px 20px 25px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+/* Pressed effect */
+.social-button:active {
+  transform: translateY(2px);
+  box-shadow: 
+    inset -4px 0 4px rgba(0, 0, 0, 0.1),
+    inset 0 -4px 4px rgba(0, 0, 0, 0.15),
+    0 0 0 2px rgba(0, 0, 0, 0.5),
+    5px 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-button:active::before {
+  top: 5px;
+  left: 5px;
+  bottom: 11px;
+  right: 11px;
+  box-shadow: 
+    -5px -5px 5px rgba(255, 255, 255, 0.15),
+    5px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Page Navigation Section ------------------------------------------------------------------------------------------ */
