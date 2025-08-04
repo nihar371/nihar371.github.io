@@ -8,7 +8,7 @@ const blogs = [
   {
     file: "blogs\\Web Scraping - Selenium\\web scraping with selenium.html",
     title: "Web Scraping - Selenium",
-    date: "2025-05-14"
+    date: "2024-09-30"
   }
 ];
 
