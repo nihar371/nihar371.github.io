@@ -1,6 +1,13 @@
 // Hardcoded blog list – you can add more entries here
 const blogs = [
   {
+    file: "blogs\\Comparing Sequential Models\\Comparing Sequential Models.html",
+    title: "Comparing Sequential Models",
+    date: "2025-08-26",
+    description: "In this post, we're putting three popular sequential models—RNN, LSTM, and GRU—to the test on the challenging task of predicting Ethereum's stock price. We'll explore how stacking layers impacts their performance and analyze their architectural differences to see which model truly comes out on top. This comparison will provide a practical look at why LSTMs and GRUs are often preferred for time-series forecasting.",
+    image_path: "blogs\\Comparing Sequential Models\\assets\\thumbnail\\architecture_compare.png"
+  },
+  {
     file: "blogs\\AMD Time Seris\\Time-series.html",
     title: "AMD Time Series",
     date: "2025-05-01",
