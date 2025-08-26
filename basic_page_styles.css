@@ -1,3 +1,6 @@
+/* --- Google Fonts Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 @font-face {
   font-family: test;
   src: url("assets\\fonts\\google fonts\\funsized-font\\Funsized-gJEP.ttf");
@@ -8,7 +11,7 @@
   src: url("assets\\fonts\\Outfit\\Outfit-VariableFont_wght.ttf");
 }
 
-/* General Responsive Section ------------------------------------------------------------------------------------------ */
+/* ---------------------------------------------- General Responsive Section ---------------------------------------------- */
 
 html {
   min-height: 100%;
@@ -23,29 +26,7 @@ body {
   padding: 0px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .header {
-    padding: 20px;
-  }
-
-  .profile-container {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profile-image {
-    margin-right: 0;
-    margin-bottom: 20px;
-  }
-
-  .buttons {
-    justify-content: center;
-  }
-}
-
-
-/* Page Progress bar ------------------------------------------------------------------------------------------ */
+/* ---------------------------------------------- Page Progress bar ---------------------------------------------- */
 
 #bar {
   width: 0vw;
@@ -69,6 +50,7 @@ body {
 /* Top Header Section ------------------------------------------------------------------------------------------ */
 .header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 40px;
@@ -209,7 +191,7 @@ body {
     5px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Page Navigation Section ------------------------------------------------------------------------------------------ */
+/* ---------------------------------------------- Page Navigation Section ---------------------------------------------- */
 
 .nav-grid{
   position: fixed;
@@ -262,15 +244,188 @@ body {
 
 
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-image {
+    margin-right: 0px;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+}
 
 
 
 
+/* ------------------------------------------------ Music Player ------------------------------------------------ */
+
+/* --- Style Variables --- */
+:root {
+  --primary-color: #f0f0f0;
+  --secondary-color: #ffffff;
+  --accent-color: #ff7675;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.2);
+}
+
+/* --- Complete CSS for the Music Player --- */
+
+/* 1. Main Container & Background */
+/* This creates the main "glassmorphism" bar and sets up the flexbox layout. */
+.music-container {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: min(90%, 500px);
+  height: 50px;
+  border-radius: 50px; /* Pill shape */
+  margin: 20px auto;
+  z-index: 1;
+  
+  /* Flexbox layout for arranging items */
+  display: flex;
+  flex-direction: row; /* Arrange items horizontally */
+  align-items: center;  /* Vertically align all items to the center */
+  gap: 15px;            /* Create consistent spacing between all items */
+  padding: 10px 10px;   /* Adjust padding for a clean look */
+}
+
+/* 2. Album Art Styling */
+/* This handles the circular, rotating album art. */
+.img-container {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0; /* Prevents the image from shrinking */
+}
+
+.img-container img {
+  border-radius: 50%;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  animation: rotate 8s linear infinite;
+  animation-play-state: paused;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* This class is added by JavaScript when playing */
+.music-container.play .img-container img {
+  animation-play-state: running;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 3. Song Info & Progress Bar */
+/* This section grows to fill the middle space. */
+.music-info {
+  flex-grow: 1;         /* Allows this element to grow */
+  min-width: 0;         /* Prevents overflow on small screens */
+  position: static;
+  opacity: 1;
+  transform: none;
+  padding: 0;
+  background: transparent;
+}
+
+#title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  text-shadow: none;
+  text-align: left;
+  color: #f0f0f0; /* Light color for visibility */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds '...' for long titles */
+}
+
+.progress-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  cursor: pointer;
+  height: 6px;
+  width: 100%;
+}
+
+.progress {
+  background-color: #ff7675; /* Accent color */
+  border-radius: 5px;
+  height: 100%;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 300;
+  color: #ccc;
+}
+
+/* 4. Navigation Buttons */
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+}
 
 
+.action-btn {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0;
+  flex-shrink: 0; /* Prevents buttons from shrinking */
+  transition: transform 0.2s ease-in-out;
+}
 
+.action-btn:hover {
+  transform: scale(1.1);
+}
 
+.action-btn.action-btn-big {
+  background-color: #ff7675; /* Accent color for the main button */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(255, 118, 117, 0.5);
+}
 
+.action-btn:focus {
+  outline: 0;
+}
 
+/* 5. Icon Sizing and Coloring */
+.action-btn img {
+  width: 20px;
+  height: 20px;
+  /* This filter turns black icons white. */
+  filter: brightness(0) invert(1);
+}
 
-
+.action-btn.action-btn-big img {
+  width: 28px;
+  height: 28px;
+}
