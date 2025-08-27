@@ -1,37 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Set body padding directly, which is more common than using setAttribute for styles.
   document.body.style.padding = "0";
-
-  // Select the main element once to avoid redundant queries.
   const mainElement = document.querySelector('main');
 
-  // If the main element doesn't exist, log an error and stop execution.
   if (!mainElement) {
     console.error("'main' element not found. Header and nav could not be loaded.");
     return;
   }
 
   /**
-   * Injects the header HTML (profile and music player) and initializes the player.
+   * Injects the header HTML and initializes the player.
    */
   function loadHeader() {
     const headerHTML = `
       <div class="header">
         <div class="profile-container">
-          <!-- Circular Profile Image -->
           <div class="profile-image">
             <img src="/assets/images/profile/my-profile-image.jpg" alt="Your Name">
           </div>
-          <!-- Intro and Buttons -->
           <div class="intro">
             <h1>Nihar Patel</h1>
             <p>Machine Learning Engineer | Building intelligent systems to solve real-world problems.</p>
             <div class="social-buttons-grid">
-              <a href="mailto:niharjpatel372001@gmail.com" class="social-button"><img src="/assets/images/icons/mail-logo.png" alt="mailto:niharjpatel372001@gmail.com"></a>
-              <a href="https://github.com/nihar371" target="_blank" class="social-button"><img src="/assets/images/icons/github-logo.png" alt="GitHub:nihar371"></a>
-              <a href="https://www.linkedin.com/in/niharpatel371/" target="_blank" class="social-button"><img src="/assets/images/icons/linkedin-logo.png" alt="LinkedIn:niharpatel371"></a>
-              <a href="https://nihar-patel.medium.com/" target="_blank" class="social-button"><img src="/assets/images/icons/medium-logo.png" alt="Medium:nihar-patel"></a>
-              <a href="https://www.kaggle.com/niharpatel03" target="_blank" class="social-button"><img src="/assets/images/icons/kaggle-logo.png" alt="Kaggle:niharpatel03"></a>
+              <a href="mailto:niharjpatel372001@gmail.com" class="social-button"><img src="/assets/images/icons/mail-logo.png" alt="Email"></a>
+              <a href="https://github.com/nihar371" target="_blank" class="social-button"><img src="/assets/images/icons/github-logo.png" alt="GitHub"></a>
+              <a href="https://www.linkedin.com/in/niharpatel371/" target="_blank" class="social-button"><img src="/assets/images/icons/linkedin-logo.png" alt="LinkedIn"></a>
+              <a href="https://nihar-patel.medium.com/" target="_blank" class="social-button"><img src="/assets/images/icons/medium-logo.png" alt="Medium"></a>
+              <a href="https://www.kaggle.com/niharpatel03" target="_blank" class="social-button"><img src="/assets/images/icons/kaggle-logo.png" alt="Kaggle"></a>
             </div>
           </div>
         </div>
@@ -40,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="img-container">
             <img src="" alt="music-cover" id="cover">
           </div>
-          <!-- The music info panel -->
           <div class="music-info">
             <h4 id="title">Song Title</h4>
             <div class="progress-container" id="progress-container">
@@ -67,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
     mainElement.insertAdjacentHTML("beforebegin", headerHTML);
-    initializeMusicPlayer(); // Initialize player after its HTML is injected.
+    initializeMusicPlayer();
   }
 
   /**
@@ -88,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function setupProgressBar() {
     const progressBar = document.getElementById("bar");
-    if (!progressBar) return; // Exit if progress bar element doesn't exist
+    if (!progressBar) return;
 
     window.onscroll = () => {
       const scroll = document.documentElement.scrollTop;
@@ -99,13 +92,66 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
+   * Makes the music player stick to the top by moving it in the DOM.
+   */
+  function setupStickyPlayer() {
+    const header = document.querySelector('.header');
+    const musicContainer = document.getElementById('music-container');
+    if (!header || !musicContainer) return;
+
+    const placeholder = document.createElement('div');
+    const musicStyle = window.getComputedStyle(musicContainer);
+    placeholder.style.height = `${musicContainer.offsetHeight}px`;
+    placeholder.style.marginTop = musicStyle.marginTop;
+    placeholder.style.marginBottom = musicStyle.marginBottom;
+
+    const stickyPoint = musicContainer.offsetTop;
+    let isPlayerFixed = false;
+    window.addEventListener('scroll', () => {
+
+      const shouldBeFixed = window.scrollY > stickyPoint - parseInt(musicStyle.marginTop, 10);
+
+      if (shouldBeFixed && !isPlayerFixed) {
+        isPlayerFixed = true;
+        
+        // Add class for styling like width, shadow, etc.
+        musicContainer.classList.add('music-container-fixed');
+        
+        // **Force position via JS to override any potential CSS conflicts**
+        musicContainer.style.position = 'fixed';
+        musicContainer.style.top = '0';
+        musicContainer.style.left = '0';
+        musicContainer.style.right = '0';
+
+        // Replace player with placeholder and move player to the body
+        header.replaceChild(placeholder, musicContainer);
+        document.body.appendChild(musicContainer);
+
+      } else if (!shouldBeFixed && isPlayerFixed) {
+        isPlayerFixed = false;
+        
+        musicContainer.classList.remove('music-container-fixed');
+        
+        // **Clear inline styles to revert to stylesheet behavior**
+        musicContainer.style.position = '';
+        musicContainer.style.top = '';
+        musicContainer.style.left = '';
+        musicContainer.style.zIndex = '';
+        
+        // Move player back into the header
+        header.replaceChild(musicContainer, placeholder);
+      }
+    });
+  }
+
+
+  /**
    * Contains all logic and event listeners for the music player.
    */
   function initializeMusicPlayer() {
     const musicContainer = document.getElementById('music-container');
     if (!musicContainer) return;
 
-    // Select all necessary music player elements
     const playBtn = document.getElementById('play');
     const prevBtn = document.getElementById('prev');
     const nextBtn = document.getElementById('next');
@@ -118,13 +164,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const currTimeSpan = document.getElementById('currTime');
     const durTimeSpan = document.getElementById('durTime');
 
-    // Song configuration
     const songs = ['Heart_Attack', 'kyoto', 'Stoned_And_Sedated', 'My_Songs_Know_What_You_Did_In_The_Dark'];
     const audioFolderPath = '/assets/music/audio/';
     const thumbnailFolderPath = '/assets/music/thumbnail/';
     let songIndex = 0;
-
-    // --- Core Player Functions ---
 
     function loadSong(song) {
       title.textContent = song.replace(/_|-/g, ' ');
@@ -185,8 +228,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
-    // --- Attach Event Listeners ---
-
     playBtn.addEventListener('click', () => {
       const isPlaying = musicContainer.classList.contains('play');
       isPlaying ? pauseSong() : playSong();
@@ -199,7 +240,6 @@ document.addEventListener("DOMContentLoaded", () => {
     audio.addEventListener('ended', nextSong);
     progressContainer.addEventListener('click', setProgress);
 
-    // Initialize player with the first song
     loadSong(songs[songIndex]);
   }
 
@@ -207,4 +247,5 @@ document.addEventListener("DOMContentLoaded", () => {
   loadHeader();
   loadNav();
   setupProgressBar();
+  setupStickyPlayer();
 });
