@@ -53,7 +53,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 20px 40px;
   background-color: #242222;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -293,7 +293,7 @@ body {
   width: min(90%, 500px);
   height: 50px;
   border-radius: 50px; /* Pill shape */
-  margin: 20px auto;
+  margin: 20px auto 10px auto;
   z-index: 1;
   
   /* Flexbox layout for arranging items */
