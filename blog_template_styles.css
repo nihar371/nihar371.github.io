@@ -9,14 +9,37 @@
 }
 
 /* General Responsive Section ------------------------------------------------------------------------------------------ */
+* {
+  font-size: medium;
+}
+
+h1 {
+  color: #e9c46a;
+}
+
+h2 {
+  color: #f4a261;
+}
+
+h3 {
+  color: #e76f51;
+}
 
 body {
   font-family: outfit;
   background-color: #465460; /* Primary Dark */
   background: linear-gradient(180deg, #465460 1%, #2c2c2c);
-  color: #f3f3f3; /* Light Background */
+  color: #E4E4E4; /* Light Background */
   margin: 0px;
   padding: 0px;
+}
+
+main {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  width: min(90%, 1200px);
 }
 
 /* Responsive Design */
@@ -39,25 +62,3 @@ body {
     justify-content: center;
   }
 }
-
-/* Page Progress bar ------------------------------------------------------------------------------------------ */
-
-#bar {
-  width: 0vw;
-  height: 0.2vh;
-  transition: all linear .2s;
-  background-color: rgb(114, 165, 73);
-  box-shadow: 0 0 10px 0px rgb(205, 255, 119);
-  position: fixed;
-  top:0;
-  z-index: 100;
-}
-
-main {
-  max-width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1200px;
-  width: 100%;
-}
-
