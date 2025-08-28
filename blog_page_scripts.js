@@ -1,25 +1,25 @@
 // Hardcoded blog list – you can add more entries here
 const blogs = [
   {
-    file: "blogs\\Comparing Sequential Models\\Comparing Sequential Models.html",
+    file: "blog\\comparing-sequential-models.html",
     title: "Comparing Sequential Models",
     date: "2025-08-26",
     description: "In this post, we're putting three popular sequential models—RNN, LSTM, and GRU—to the test on the challenging task of predicting Ethereum's stock price. We'll explore how stacking layers impacts their performance and analyze their architectural differences to see which model truly comes out on top. This comparison will provide a practical look at why LSTMs and GRUs are often preferred for time-series forecasting.",
-    image_path: "blogs\\Comparing Sequential Models\\assets\\thumbnail\\architecture_compare.png"
+    image_path: "blog\\comparing-sequential-models\\thumbnail\\architecture_compare.png"
   },
   {
-    file: "blogs\\AMD Time Seris\\Time-series.html",
+    file: "blog\\analyzing-time-series.html",
     title: "AMD Time Series",
     date: "2025-05-01",
     description: "In this blog, we will be performing time series analysis on AMD's stock price, exploring its mathematical aspects in detail. We'll begin by conducting some data analysis, then transitioning to the mathematical foundations, including gaining a deep understanding of stationarity and becoming familiar with ACF, PACF, and EACF plots. We will also delve into modeling with ARIMA and SARIMA models. Furthermore, we will examine the usefulness of log transformations and evaluate our models using various residual analysis techniques, including the Ljung-Box test, among others.",
-    image_path: "blogs\\AMD Time Seris\\thumbnail\\amd_stock_price.png"
+    image_path: "blog\\analyzing-time-series\\thumbnail\\amd_stock_price.png"
   },
   {
-    file: "blogs\\Web Scraping - Selenium\\web scraping with selenium.html",
+    file: "blog\\web-scraping-with-selenium.html",
     title: "Web Scraping - Selenium",
     date: "2024-09-30",
     description: `Learn what web scraping is, why it’s important, and how Selenium makes it easier. Understand how to access elements within the DOM, and discover techniques to handle common obstacles such as advertisements, cookie pop-ups, and other interruptions. Explore simple workarounds like refreshing the page, introducing waits, and leveraging smart element-handling strategies to make scraping more efficient.`,
-    image_path: "blogs\\Web Scraping - Selenium\\thumbnail\\inspect.png"
+    image_path: "blog\\web-scraping-with-selenium\\thumbnail\\inspect.png"
   }
 ];
 
