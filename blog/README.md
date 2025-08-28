@@ -19,9 +19,6 @@ jupyter-nbconvert <fileName>.ipynb --to html --no-input --HTMLExporter.theme=dar
 
                         ========================== Centered images ==========================
 
-<center><img src='.\\dir-name\\images\\figure.png' alt='Figure 1'></img></center>
-
-
 <center>
     <figure>
     <img src='.\\dir-name\\images\\figure.png' alt='Figure Name'>
