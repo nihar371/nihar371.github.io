@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainElement = document.querySelector('main');
 
   if (!mainElement) {
-    console.error("'main' element not found. Header and nav could not be loaded.");
+    console.error("'main' element not found. `header`, `nav`, and `progress-bar` could not be loaded.");
     return;
   }
 
@@ -73,13 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="page-nav-button" id="project-button" aria-label="View Project Section"><a href="/project.html"><span>Project</span></a></div>
         <div class="page-nav-button" id="blog-button" aria-label="View Blog Section"><a href="/blog.html"><span>Blog</span></a></div>
       </div>`;
-    mainElement.insertAdjacentHTML("afterbegin", navHTML);
+    mainElement.insertAdjacentHTML("beforebegin", navHTML);
   }
 
   /**
    * Sets up the scroll progress bar functionality.
    */
   function setupProgressBar() {
+    const progressBarHTML = `<div id="bar"></div>`;
+    mainElement.insertAdjacentHTML("beforebegin", progressBarHTML);
+
     const progressBar = document.getElementById("bar");
     if (!progressBar) return;
 
