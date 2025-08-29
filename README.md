@@ -5,7 +5,7 @@
   <img src="./REDME_assets/closer.gif" alt="Another character beckoning someone closer" style="height: 150px; object-fit: contain;">
 </div>
 
-## Check this OUT!!! [PORTFOLIO](https://nihar371.github.io/portfolio/)
+## Check this OUT!!! [Website](https://nihar371.github.io/)
 
 
 <div style="display: flex;">
