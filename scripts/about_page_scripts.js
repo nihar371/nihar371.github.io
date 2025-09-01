@@ -25,3 +25,19 @@ waitForElementObserver('#about-button', () => {
     });
   });
 });
+
+
+
+function setDynamicPadding() {
+  const divElement = document.getElementsByClassName('paper')[0];
+  const divHeight = divElement.offsetHeight;
+
+  const paddingTop = divHeight * 0.10; 
+  const paddingBottom = divHeight * 0.20;
+
+  divElement.style.paddingTop = `${paddingTop}px`;
+  divElement.style.paddingBottom = `${paddingBottom}px`;
+}
+
+window.addEventListener('load', setDynamicPadding);
+window.addEventListener('resize', setDynamicPadding); 
