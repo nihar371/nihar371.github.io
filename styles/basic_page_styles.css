@@ -13,6 +13,9 @@ html {
 }
 
 body {
+  position: relative;
+  width: 100%;
+  height: 100%;
   font-family: outfit;
   background-color: #465460; /* Primary Dark */
   background: linear-gradient(180deg, #465460 1%, #2c2c2c);
@@ -184,6 +187,24 @@ body {
   box-shadow: 
     -5px -5px 5px rgba(255, 255, 255, 0.15),
     5px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------------------------------------------- Footer Section ---------------------------------------------- */
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  margin: auto;
+}
+
+.footer .footer-content {
+  max-width: fit-content;
+  margin-inline: auto;
+}
+
+.footer p {
+  margin: 5px auto ;
 }
 
 /* ---------------------------------------------- Page Navigation Section ---------------------------------------------- */

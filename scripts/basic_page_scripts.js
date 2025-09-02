@@ -63,6 +63,17 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeMusicPlayer();
   }
 
+  function loadFooter() {
+    const footerHTML = `
+      <div class="footer">
+        <div class="footer-content">
+          <p>Made with lot of ❤️ - Nihar</p>
+        </div>
+      </div>
+    `;
+    mainElement.insertAdjacentHTML("afterend", footerHTML);
+  }
+
   /**
    * Injects the navigation buttons into the page.
    */
@@ -107,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     placeholder.style.height = `${musicContainer.offsetHeight}px`;
     placeholder.style.marginTop = musicStyle.marginTop;
     placeholder.style.marginBottom = musicStyle.marginBottom;
+    let musicContainerWidth = window.getComputedStyle(musicContainer).getPropertyValue('width')
 
     const stickyPoint = musicContainer.offsetTop;
     let isPlayerFixed = false;
@@ -116,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (shouldBeFixed && !isPlayerFixed) {
         isPlayerFixed = true;
-        
+
         // Add class for styling like width, shadow, etc.
         musicContainer.classList.add('music-container-fixed');
         
@@ -129,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Replace player with placeholder and move player to the body
         header.replaceChild(placeholder, musicContainer);
         document.body.appendChild(musicContainer);
+        musicContainer.style.width = musicContainerWidth;
 
       } else if (!shouldBeFixed && isPlayerFixed) {
         isPlayerFixed = false;
@@ -143,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Move player back into the header
         header.replaceChild(musicContainer, placeholder);
+        musicContainer.style.width = musicContainerWidth;
       }
     });
   }
@@ -248,6 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Run Initialization Functions ---
   loadHeader();
+  loadFooter();
   loadNav();
   setupProgressBar();
   setupStickyPlayer();

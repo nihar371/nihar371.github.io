@@ -1,3 +1,7 @@
+body {
+  min-height: 100%;
+}
+
 #blog-button {
   background-color: #f65454;
 }
@@ -7,6 +11,10 @@
 
 #blogSection {
   height: 100%;
+}
+
+.blog-section {
+  padding: 20px 0px;
 }
 
 .blog-grid {
