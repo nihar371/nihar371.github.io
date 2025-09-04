@@ -52,3 +52,98 @@ main {
     justify-content: center;
   }
 }
+
+
+
+
+
+
+
+
+
+
+#blog-post {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sidebar / Aside */
+aside {
+    /* Sticky positioning is now handled in the media query for larger screens */
+    align-self: flex-start;
+    max-height: 100%;
+}
+
+#outline-container {
+    /* background-color: #1F2937; */
+    padding: 1.5rem;
+    margin-bottom: 20px;
+    /* border-radius: 0.5rem; */
+    /* box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3); */
+    overflow: auto;
+}
+
+#outline-container h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 0.5rem;
+}
+
+
+/* Table of Contents Navigation */
+#toc-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#toc-nav a {
+    display: block;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    color: #9CA3AF;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+#toc-nav a:hover {
+    color: #3B82F6;
+}
+
+#toc-nav .active {
+    color: #3B82F6;
+    font-weight: 600;
+}
+
+#toc-nav p {
+    color: #9CA3AF;
+}
+
+/* Responsive Design for Larger Screens */
+@media (min-width: 1024px) {
+    #blog-post {
+        flex-direction: row;
+    }
+    aside {
+        width: 25%;
+        position: sticky; /* Sticky behavior only for large screens */
+        top: 2rem;
+        /* Make the TOC scrollable if its content is too long for the screen */
+        max-height: calc(100vh - 4rem); /* 2rem top offset + 2rem bottom padding */
+        overflow-y: auto;
+    }
+    aside::-webkit-scrollbar {
+      display: none;
+    }
+    #blog-main-content {
+        width: 75%;
+    }
+}
