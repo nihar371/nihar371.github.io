@@ -1,6 +1,13 @@
 // Hardcoded blog list – you can add more entries here
 const blogs = [
   {
+    file: "optimizing-sequential-models/",
+    title: "Optimizing Sequential Models",
+    date: "2025-09-04",
+    description: "In this post, we're will be continue working on our sequential models, in the direction of optimizing them via. Pre-Training optimization methods like feature selection and Training optimization techniques like Batch Normalization and Layer Normalization. Also, we will be looking when to use each one of them, and will compare both of them for our use case. We will be comparing each one of them internally as well as with the original stacked model which with various layers.",
+    image_path: "optimizing-sequential-models/thumbnail/model_evals.png"
+  },
+  {
     file: "comparing-sequential-models/",
     title: "Comparing Sequential Models",
     date: "2025-08-26",
