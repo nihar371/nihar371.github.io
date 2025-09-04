@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function setupBlogStructure() {
     const bodyContent = document.getElementsByTagName('body')[0];
     const blogStrucHTML = `
     <div id="blog-post">
@@ -18,99 +18,85 @@ document.addEventListener('DOMContentLoaded', () => {
     const newParentDiv = document.getElementById('blog-main-content');
 
     newParentDiv.appendChild(elementToMove);
+}
 
-
-
-    const mainContent = document.getElementsByTagName('main')[0];
+// --- Function to generate the table of contents ---
+function generateOutline() {
+    const mainContent = document.getElementById('blog-main-content');
     const tocNav = document.getElementById('toc-nav');
 
-    if (!mainContent || !tocNav) {
-        console.error("Required elements ('main-content' or 'toc-nav') not found.");
-        return;
-    }
+    if (!mainContent || !tocNav) return;
 
-    // Find all header tags within the main content area
     const headers = mainContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
-
-    // Create a root for our tree structure
     const root = { level: 0, children: [] };
     let currentPath = [root];
 
     headers.forEach((header, index) => {
         const level = parseInt(header.tagName.substring(1), 10);
-
-        // Create a unique ID for the header to link to
         const headerId = header.id || `header-${index}`;
-        if (!header.id) {
-            header.id = headerId;
-        }
+        if (!header.id) header.id = headerId;
 
-        const node = {
-            level: level,
-            text: header.textContent,
-            id: headerId,
-            children: []
-        };
+        const node = { level, text: header.textContent, id: headerId, children: [] };
 
-        // Find the correct parent in the current path
         while (currentPath[currentPath.length - 1].level >= level) {
             currentPath.pop();
         }
-
-        // Add the new node to its parent's children
         currentPath[currentPath.length - 1].children.push(node);
         currentPath.push(node);
     });
 
-    // Function to recursively generate the HTML list from the tree
     const createHtmlList = (nodes) => {
-        if (nodes.length === 0) return '';
-
+        if (nodes.length === 0) return null;
         const ul = document.createElement('ul');
+
         nodes.forEach(node => {
             const li = document.createElement('li');
-
-            // Style list items based on header level
-            if (node.level > 1) {
-                li.style.paddingLeft = `${(node.level - 1) * 1}rem`;
-            }
-            if (node.level > 2) {
-                li.style.fontSize = '0.9em';
+            if (node.children.length > 0) {
+                li.classList.add('has-children');
+                const toggle = document.createElement('span');
+                toggle.classList.add('toggle-arrow', 'expanded');
+                toggle.innerHTML = `<svg viewBox="0 0 24 24"><path d="M9.29 15.88L13.17 12 9.29 8.12a.996.996 0 111.41-1.41l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3a.996.996 0 01-1.41 0c-.38-.39-.39-1.03 0-1.42z"></path></svg>`;
+                li.appendChild(toggle);
             }
 
             const a = document.createElement('a');
             a.href = `#${node.id}`;
             a.textContent = node.text;
-            a.className = 'block py-1 text-gray-600 hover:text-blue-500 transition-colors duration-200';
-            a.dataset.targetId = node.id; // Store target id for scrollspy
-
+            a.dataset.targetId = node.id;
             li.appendChild(a);
 
-            // Recursively add children
             if (node.children.length > 0) {
-                li.appendChild(createHtmlList(node.children));
+                const childUl = createHtmlList(node.children);
+                if (childUl) {
+                    childUl.classList.add('toc-children');
+                    li.appendChild(childUl);
+                }
             }
-
             ul.appendChild(li);
         });
         return ul;
     };
 
     const tocHtml = createHtmlList(root.children);
-    if (tocHtml) {
-        tocNav.appendChild(tocHtml);
-    } else {
-        tocNav.innerHTML = '<p class="text-gray-500">No headers found.</p>';
-    }
+    if (tocHtml) tocNav.appendChild(tocHtml);
 
-    // --- Optional: Scrollspy for highlighting the current section ---
+    tocNav.addEventListener('click', (e) => {
+        const toggle = e.target.closest('.toggle-arrow');
+        if (toggle) {
+            const childUl = toggle.closest('li').querySelector('.toc-children');
+            if (childUl) {
+                toggle.classList.toggle('expanded');
+                childUl.classList.toggle('collapsed');
+            }
+        }
+    });
+
     const tocLinks = tocNav.querySelectorAll('a');
     const headerElements = Array.from(headers);
 
     const onScroll = () => {
         let currentActiveId = null;
-        const scrollPosition = window.scrollY + 150; // Offset for better accuracy
-
+        const scrollPosition = window.scrollY + 150;
         for (const header of headerElements) {
             if (header.offsetTop <= scrollPosition) {
                 currentActiveId = header.id;
@@ -118,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             }
         }
-
         tocLinks.forEach(link => {
             link.classList.remove('active');
             if (link.dataset.targetId === currentActiveId) {
@@ -126,7 +111,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-
     window.addEventListener('scroll', onScroll);
-    onScroll(); // Initial check on load
+    onScroll();
+}
+
+// --- Main execution flow ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Step 1: Restructure the DOM first.
+    setupBlogStructure();
+
+    // Step 2: Generate the outline based on the new structure.
+    generateOutline();
 });
