@@ -12,7 +12,8 @@ jupyter-nbconvert <file-name>.ipynb --to html --no-input --HTMLExporter.theme=da
 
 <link rel="stylesheet" href="/styles/basic_page_styles.css">
 <link rel="stylesheet" href="/styles/blog_template_styles.css">
-<script src="/scripts//basic_page_scripts.js" defer></script>
+<script src="/scripts/basic_page_scripts.js" defer></script>
+<script src="/scripts/blog_template_scripts.js" defer></script>
 <link rel="icon" type="image/np-icon" href="/assets/images/favicon/favicon-32x32.png">
 
 =====================================================================================================================

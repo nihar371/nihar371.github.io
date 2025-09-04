@@ -17,9 +17,11 @@ h3 {
 
 body {
   font-family: outfit;
-  background-color: #465460; /* Primary Dark */
+  background-color: #465460;
+  /* Primary Dark */
   background: linear-gradient(180deg, #465460 1%, #2c2c2c);
-  color: #E4E4E4; /* Light Background */
+  color: #E4E4E4;
+  /* Light Background */
   margin: 0px;
   padding: 0px;
 }
@@ -28,8 +30,6 @@ main {
   max-width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  max-width: 1200px;
-  width: min(90%, 1200px);
 }
 
 /* Responsive Design */
@@ -52,3 +52,215 @@ main {
     justify-content: center;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Base Layout --- */
+#blog-post {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column; /* Stacks aside and main content on mobile */
+}
+
+aside {
+  align-self: flex-start;
+  width: 100%; /* Take full width on mobile */
+}
+
+/* --- The Main Outline Box --- */
+#outline-container {
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#outline-container h2 {
+  margin: 0 0 1rem 0; /* Adjusted margin */
+  border-bottom: 1px solid #374151;
+  padding-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* --- GitHub-Style Table of Contents Tree --- */
+#toc-nav {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  /* scrollbar-width: thin;
+  scrollbar-color: #4B5563 #1F2937; */
+}
+
+#toc-nav::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar */
+}
+
+/* --- Unchanged Link, List, and Toggle Styles --- */
+#toc-nav,
+#toc-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#toc-nav ul {
+  padding-left: 1rem;
+  border-left: 1px solid #374151;
+}
+
+#toc-nav li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+#toc-nav li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  width: 0.75rem;
+  height: 1px;
+  background-color: #374151;
+}
+
+#toc-nav li.has-children::before {
+  display: none;
+}
+
+#toc-nav li:last-child>ul {
+  border-left: none;
+}
+
+#toc-nav a {
+  display: block;
+  padding: 0.3rem 0.6rem;
+  margin: 0.1rem 0;
+  color: #9CA3AF;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  border-radius: 0.375rem;
+}
+
+#toc-nav a:hover {
+  color: #E5E7EB;
+  background-color: #374151;
+}
+
+#toc-nav .active {
+  color: #3B82F6;
+  font-weight: 600;
+  background-color: #374151;
+}
+
+.toggle-arrow {
+  position: absolute;
+  left: -0.75rem;
+  top: 0.35rem;
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: #1F2937;
+  border-radius: 50%;
+}
+
+.toggle-arrow svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  transition: transform 0.2s ease-in-out;
+  fill: #9CA3AF;
+}
+
+.toggle-arrow.expanded svg {
+  transform: rotate(90deg);
+}
+
+/* --- CORRECTED: Smooth Collapse/Expand Animation --- */
+.toc-children {
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  /* Use a large, fixed max-height that content is unlikely to exceed. */
+  /* This reliably animates height to/from zero. */
+  max-height: 2000px; 
+}
+
+.toc-children.collapsed {
+  max-height: 0;
+}
+
+
+/* --- Responsive Design for Larger Screens --- */
+@media (min-width: 1024px) {
+  #blog-post {
+    flex-direction: row; /* Side-by-side layout */
+  }
+
+  aside {
+    width: 25%;
+    position: sticky;
+    top: 2rem;
+    height: calc(100vh - 4rem);
+  }
+
+  #blog-main-content {
+    width: 75%;
+    padding-left: 2rem;
+  }
+}
+
+/* --- Custom Scrollbar Styling (Now combined into main #toc-nav rule) --- */
+#toc-nav::-webkit-scrollbar {
+  width: 8px;
+}
+
+#toc-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#toc-nav::-webkit-scrollbar-thumb {
+  background-color: #4B5563;
+  border-radius: 4px;
+  border: 2px solid #1F2937;
+}
+
+#toc-nav::-webkit-scrollbar-thumb:hover {
+  background-color: #6B7280;
+}
+
