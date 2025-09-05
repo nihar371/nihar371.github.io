@@ -122,4 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Step 2: Generate the outline based on the new structure.
     generateOutline();
+
+    // Temp. Fix for graphs
+    window.dispatchEvent(new Event('resize'));
 });

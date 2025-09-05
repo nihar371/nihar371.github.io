@@ -241,26 +241,6 @@ aside {
 
   #blog-main-content {
     width: 75%;
-    padding-left: 2rem;
+    padding-left: 1rem;
   }
 }
-
-/* --- Custom Scrollbar Styling (Now combined into main #toc-nav rule) --- */
-#toc-nav::-webkit-scrollbar {
-  width: 8px;
-}
-
-#toc-nav::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-#toc-nav::-webkit-scrollbar-thumb {
-  background-color: #4B5563;
-  border-radius: 4px;
-  border: 2px solid #1F2937;
-}
-
-#toc-nav::-webkit-scrollbar-thumb:hover {
-  background-color: #6B7280;
-}
-
