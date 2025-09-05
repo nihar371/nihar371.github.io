@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const footerHTML = `
       <div class="footer">
         <div class="footer-content">
-          <p>Made with lot of ❤️ - Nihar</p>
+          <p>Made with ❤️ - Nihar</p>
         </div>
       </div>
     `;
