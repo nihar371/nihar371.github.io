@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="intro">
             <h1>Nihar Patel</h1>
-            <p>Machine Learning Engineer | Building intelligent systems to solve real-world problems.</p>
+            <p>Data Scientist</p>
             <div class="social-buttons-grid">
               <a href="mailto:niharjpatel372001@gmail.com" class="social-button"><img src="/assets/images/icons/mail-logo.png" alt="Email"></a>
               <a href="https://github.com/nihar371" target="_blank" class="social-button"><img src="/assets/images/icons/github-logo.png" alt="GitHub"></a>
