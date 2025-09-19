@@ -74,15 +74,49 @@ document.addEventListener("DOMContentLoaded", () => {
     mainElement.insertAdjacentHTML("afterend", footerHTML);
   }
 
+  function scrollToTopButton() {
+    const scrollButtonHTML = `
+      <button id="scrollToTopBtn" aria-label="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up">
+          <line x1="12" y1="19" x2="12" y2="5"></line>
+          <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+      </button>
+    `;
+    mainElement.insertAdjacentHTML("afterend", scrollButtonHTML);
+
+    const scrollBtn = document.getElementById('scrollToTopBtn');
+
+    // Show or hide the button based on scroll position
+    window.addEventListener('scroll', () => {
+      // You can adjust this value to change when the button appears
+      const scrollThreshold = 300;
+      if (window.scrollY > scrollThreshold) {
+        scrollBtn.classList.add('show');
+      } else {
+        scrollBtn.classList.remove('show');
+      }
+    });
+
+    // Scroll to the top of the page smoothly when the button is clicked
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
   /**
    * Injects the navigation buttons into the page.
    */
   function loadNav() {
     const navHTML = `
       <div class="nav-grid">
-        <div class="page-nav-button" id="about-button" aria-label="View About Section"><a href="/"><span>About</span></a></div>
-        <div class="page-nav-button" id="project-button" aria-label="View Project Section"><a href="/project/"><span>Project</span></a></div>
+        <div class="page-nav-button" id="home-button" aria-label="View Landing Page"><a href="/"><span>Home</span></a></div>
         <div class="page-nav-button" id="blog-button" aria-label="View Blog Section"><a href="/blog/"><span>Blog</span></a></div>
+        <div class="page-nav-button" id="project-button" aria-label="View Project Section"><a href="/project/"><span>Project</span></a></div>
+        <div class="page-nav-button" id="about-button" aria-label="View About Section"><a href="/about/"><span>About</span></a></div>
       </div>`;
     mainElement.insertAdjacentHTML("beforebegin", navHTML);
   }
@@ -131,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Add class for styling like width, shadow, etc.
         musicContainer.classList.add('music-container-fixed');
-        
+
         // **Force position via JS to override any potential CSS conflicts**
         musicContainer.style.position = 'fixed';
         musicContainer.style.top = '0';
@@ -145,15 +179,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       } else if (!shouldBeFixed && isPlayerFixed) {
         isPlayerFixed = false;
-        
+
         musicContainer.classList.remove('music-container-fixed');
-        
+
         // **Clear inline styles to revert to stylesheet behavior**
         musicContainer.style.position = '';
         musicContainer.style.top = '';
         musicContainer.style.left = '';
         musicContainer.style.zIndex = '';
-        
+
         // Move player back into the header
         header.replaceChild(musicContainer, placeholder);
         musicContainer.style.width = musicContainerWidth;
@@ -232,11 +266,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const clickX = e.offsetX;
       audio.currentTime = (clickX / width) * audio.duration;
     }
-    
+
     function setDuration() {
-        if(audio.duration){
-            durTimeSpan.textContent = formatTime(audio.duration);
-        }
+      if (audio.duration) {
+        durTimeSpan.textContent = formatTime(audio.duration);
+      }
     }
 
     function formatTime(seconds) {
@@ -264,6 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadHeader();
   loadFooter();
   loadNav();
+  scrollToTopButton();
   setupProgressBar();
   setupStickyPlayer();
 });
