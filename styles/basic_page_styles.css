@@ -1,9 +1,14 @@
 /* --- Google Fonts Import --- */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 @font-face {
   font-family: outfit;
   src: url("/assets/fonts/Outfit/Outfit-VariableFont_wght.ttf");
+}
+
+:root {
+  --font-family-primary: 'outfit', 'Segoe UI', sans-serif;
+  --outfit-font-family: 'outfit', 'Segoe UI', sans-serif;
+  --noto-serift-font-family: 'noto-serift', 'Segoe UI', sans-serif;
 }
 
 /* ---------------------------------------------- General Responsive Section ---------------------------------------------- */
@@ -17,9 +22,11 @@ body {
   width: 100%;
   height: 100%;
   font-family: outfit;
-  background-color: #465460; /* Primary Dark */
+  background-color: #465460;
+  /* Primary Dark */
   background: linear-gradient(180deg, #465460 1%, #2c2c2c);
-  color: #f3f3f3; /* Light Background */
+  color: #f3f3f3;
+  /* Light Background */
   margin: 0px;
   padding: 0px;
 }
@@ -33,7 +40,7 @@ body {
   background-color: rgb(114, 165, 73);
   box-shadow: 0 0 10px 0px rgb(205, 255, 119);
   position: fixed;
-  top:0;
+  top: 0;
   z-index: 100;
 }
 
@@ -73,7 +80,8 @@ body {
   border-radius: 50%;
   overflow: hidden;
   margin-right: 40px;
-  border: 4px solid #ffba4c; /* Primary Accent */
+  border: 4px solid #ffba4c;
+  /* Primary Accent */
 }
 
 .profile-image img {
@@ -89,13 +97,15 @@ body {
 .intro h1 {
   margin: 0 0 10px;
   font-size: 2em;
-  color: #f0f0f0; /* Light Background */
+  color: #f0f0f0;
+  /* Light Background */
 }
 
 .intro p {
   margin: 0 0 20px;
   font-size: 1.1em;
-  color: #778DA9; /* Secondary Accent */
+  color: #778DA9;
+  /* Secondary Accent */
   max-width: 400px;
 }
 
@@ -109,12 +119,13 @@ body {
 /* Make buttons flexible and responsive */
 .social-button {
   position: relative;
-  flex: 1 1 60px; /* Allows shrinking/growing with a base width */
+  flex: 1 1 60px;
+  /* Allows shrinking/growing with a base width */
   max-width: 60px;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
   background: linear-gradient(180deg, #282828, #202020);
-  box-shadow: 
+  box-shadow:
     inset -8px 0 8px rgba(0, 0, 0, 0.15),
     inset 0 -8px 8px rgba(0, 0, 0, 0.25),
     0 0 0 2px rgba(0, 0, 0, 0.75),
@@ -136,7 +147,7 @@ body {
   right: 12px;
   background: linear-gradient(90deg, #232323, #4a4a4a);
   border-radius: 10px;
-  box-shadow: 
+  box-shadow:
     -10px -10px 10px rgba(255, 255, 255, 0.25),
     10px 5px 10px rgba(0, 0, 0, 0.15);
   border-left: 1px solid #0004;
@@ -173,7 +184,7 @@ body {
 /* Pressed effect */
 .social-button:active {
   transform: translateY(2px);
-  box-shadow: 
+  box-shadow:
     inset -4px 0 4px rgba(0, 0, 0, 0.1),
     inset 0 -4px 4px rgba(0, 0, 0, 0.15),
     0 0 0 2px rgba(0, 0, 0, 0.5),
@@ -185,7 +196,7 @@ body {
   left: 5px;
   bottom: 11px;
   right: 11px;
-  box-shadow: 
+  box-shadow:
     -5px -5px 5px rgba(255, 255, 255, 0.15),
     5px 3px 5px rgba(0, 0, 0, 0.1);
 }
@@ -206,12 +217,12 @@ body {
 }
 
 .footer p {
-  margin: 5px auto ;
+  margin: 5px auto;
 }
 
 /* ---------------------------------------------- Page Navigation Section ---------------------------------------------- */
 
-.nav-grid{
+.nav-grid {
   position: fixed;
   width: 100px;
   height: 40vh;
@@ -227,8 +238,10 @@ body {
 
 /* Navigation Button */
 .page-nav-button {
-  top: 60%; /* Position below the Projects Button */
-  background-color: #415A77; /* Different color for distinction */
+  top: 60%;
+  /* Position below the Projects Button */
+  background-color: #415A77;
+  /* Different color for distinction */
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2);
   width: 100px;
   height: 50px;
@@ -244,7 +257,7 @@ body {
   transform: translate(-10px, 0%);
 }
 
-.page-nav-button a{
+.page-nav-button a {
   width: 100%;
   height: 100%;
   display: block;
@@ -305,21 +318,27 @@ body {
 .music-container {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  -webkit-backdrop-filter: blur(10px);
+  /* For Safari */
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.18);
   width: min(90%, 500px);
   height: 50px;
-  border-radius: 50px; /* Pill shape */
+  border-radius: 50px;
+  /* Pill shape */
   margin: 20px auto 10px auto;
   z-index: 9999;
-  
+
   /* Flexbox layout for arranging items */
   display: flex;
-  flex-direction: row; /* Arrange items horizontally */
-  align-items: center;  /* Vertically align all items to the center */
-  gap: 15px;            /* Create consistent spacing between all items */
-  padding: 10px 10px;   /* Adjust padding for a clean look */
+  flex-direction: row;
+  /* Arrange items horizontally */
+  align-items: center;
+  /* Vertically align all items to the center */
+  gap: 15px;
+  /* Create consistent spacing between all items */
+  padding: 10px 10px;
+  /* Adjust padding for a clean look */
 }
 
 /* 2. Album Art Styling */
@@ -327,7 +346,8 @@ body {
 .img-container {
   width: 60px;
   height: 60px;
-  flex-shrink: 0; /* Prevents the image from shrinking */
+  flex-shrink: 0;
+  /* Prevents the image from shrinking */
 }
 
 .img-container img {
@@ -346,15 +366,22 @@ body {
 }
 
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 3. Song Info & Progress Bar */
 /* This section grows to fill the middle space. */
 .music-info {
-  flex-grow: 1;         /* Allows this element to grow */
-  min-width: 0;         /* Prevents overflow on small screens */
+  flex-grow: 1;
+  /* Allows this element to grow */
+  min-width: 0;
+  /* Prevents overflow on small screens */
   position: static;
   opacity: 1;
   transform: none;
@@ -368,10 +395,12 @@ body {
   margin: 0 0 5px 0;
   text-shadow: none;
   text-align: left;
-  color: #f0f0f0; /* Light color for visibility */
+  color: #f0f0f0;
+  /* Light color for visibility */
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Adds '...' for long titles */
+  text-overflow: ellipsis;
+  /* Adds '...' for long titles */
 }
 
 .progress-container {
@@ -383,7 +412,8 @@ body {
 }
 
 .progress {
-  background-color: #ff7675; /* Accent color */
+  background-color: #ff7675;
+  /* Accent color */
   border-radius: 5px;
   height: 100%;
   width: 0%;
@@ -412,7 +442,8 @@ body {
   cursor: pointer;
   padding: 10px;
   margin: 0;
-  flex-shrink: 0; /* Prevents buttons from shrinking */
+  flex-shrink: 0;
+  /* Prevents buttons from shrinking */
   transition: transform 0.2s ease-in-out;
 }
 
@@ -421,7 +452,8 @@ body {
 }
 
 .action-btn.action-btn-big {
-  background-color: #ff7675; /* Accent color for the main button */
+  background-color: #ff7675;
+  /* Accent color for the main button */
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -486,7 +518,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   /* Appearance */
   background-color: #415A77;
   color: white;
@@ -496,13 +528,13 @@ body {
   height: 50px;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  
+
   /* Positioning */
   position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 1000;
-  
+
   /* Initial state: hidden */
   opacity: 0;
   visibility: hidden;

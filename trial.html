@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Professional History</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+
+    <style>
+        :root {
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --background-gradient: linear-gradient(180deg, #465460 1%, #2c2c2c);
+            --text-primary: #f5f5f5;
+            --text-secondary: #bdc3c7;
+            --bar-work-color: #1abc9c;
+            --bar-education-color: #9b59b6;
+            --bar-text-color: #ffffff;
+            --year-label-color: #7f8c8d;
+            --grid-line-color: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--background-gradient);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .chart-container {
+            padding: 25px;
+            background-color: transparent;
+            border-radius: 12px;
+            box-shadow: none;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .instructions {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chart-container">
+            <h1>My Professional Journey</h1>
+            <div class="canvas-wrapper">
+                <canvas id="ganttChart"></canvas>
+            </div>
+            <p class="instructions">
+                <b>Tip:</b> Press <b>'A'</b> to go back in time, <b>'D'</b> to go forward. Use the <b>scroll wheel</b> to zoom.
+            </p>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        
+        const computedStyles = getComputedStyle(document.documentElement);
+        const barWorkColor = computedStyles.getPropertyValue('--bar-work-color').trim();
+        const barEducationColor = computedStyles.getPropertyValue('--bar-education-color').trim();
+        const barTextColor = computedStyles.getPropertyValue('--bar-text-color').trim();
+        const yearLabelColor = computedStyles.getPropertyValue('--year-label-color').trim();
+        const gridLineColor = computedStyles.getPropertyValue('--grid-line-color').trim();
+
+        // --- DATA SETUP ---
+        const workData = [
+             {
+                label: 'Data Developer Jr.', institution: 'ADP', start: '2024-06-01', end: new Date(), logo: 'https://logo.clearbit.com/adp.com',
+                details: ["Designed and deployed ETL pipelines using Databricks and PySpark.", "Leveraged AWS services like S3, Redshift, Lambda, and Glue.", "Developed Power BI dashboards using DAX for leadership."]
+            },
+            {
+                label: 'Data Science Teaching Assistant', institution: 'Stevens Institute of Technology', start: '2024-01-15', end: '2024-05-15', logo: 'https://logo.clearbit.com/stevens.edu',
+                details: ["Assisted in Optimization for Data Science and Probability Theory courses.", "Conducted an AI Workshop for the Summer Pre-College Program."]
+            },
+            {
+                label: 'Software Developer Intern', institution: 'EFFE Studio Pvt. Ltd.', start: '2021-06-01', end: '2021-08-31', logo: 'https://placehold.co/100x100/f1f1f1/7b7b7b?text=ES',
+                details: ["Led a team of five developers and 3D artists in Unity.", "Integrated Google Cloud Auth and Firebase for over 10,000 users."]
+            },
+            {
+                label: 'Undergraduate Research Intern', institution: 'MICxN Laboratory', start: '2022-05-15', end: '2022-08-15', logo: 'https://placehold.co/100x100/f1f1f1/7b7b7b?text=MICxN',
+                details: ["Addressed congestion control within Intelligent Transportation Systems (ITS).", "Employed RNN/LSTM networks for traffic analysis."]
+            }
+        ];
+        const educationData = [
+            {
+                label: 'M.S. in Data Science', institution: 'Stevens Institute of Technology', start: '2023-09-01', end: '2025-05-20', logo: 'https://logo.clearbit.com/stevens.edu',
+                details: ["CGPA: 3.9/4.0", "Recipient of a Merit-based Provost Scholarship."]
+            },
+            {
+                label: 'B.S. in Computer Science', institution: 'Ahmedabad University', start: '2019-08-15', end: '2023-05-20', logo: 'https://logo.clearbit.com/ahduni.edu.in',
+                details: ["Minors in Business Analytics.", "Recipient of a Merit-based MYSY Scholarship."]
+            }
+        ];
+
+        const allData = [
+            ...workData.map(item => ({ ...item, type: 'work' })),
+            ...educationData.map(item => ({ ...item, type: 'education' }))
+        ];
+        allData.sort((a, b) => new Date(a.start) - new Date(b.start));
+
+        const lanes = [];
+        allData.forEach(item => {
+            let placedInLane = false;
+            for (let i = 0; i < lanes.length; i++) {
+                if (new Date(item.start) >= lanes[i]) {
+                    item.lane = i; lanes[i] = new Date(item.end); placedInLane = true; break;
+                }
+            }
+            if (!placedInLane) {
+                item.lane = lanes.length; lanes.push(new Date(item.end));
+            }
+        });
+        const numLanes = lanes.length;
+
+        // Formula-driven height calculation
+        const canvasWrapper = document.querySelector('.canvas-wrapper');
+        const desiredBarThickness = 120;
+        const desiredBarPadding = 30;
+        const heightPerLane = desiredBarThickness + desiredBarPadding;
+        const barPercentage = desiredBarThickness / heightPerLane;
+        const xAxisHeight = 80;
+        canvasWrapper.style.height = `${(numLanes * heightPerLane) + xAxisHeight}px`;
+
+        const imagePromises = allData.map(item => {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.src = item.logo;
+                item.logoImage = img;
+                img.onload = () => resolve();
+                img.onerror = () => {
+                    const placeholder = new Image();
+                    const initial = item.institution.charAt(0);
+                    placeholder.src = `https://placehold.co/100x100/f1f1f1/7b7b7b?text=${initial}`;
+                    item.logoImage = placeholder;
+                    placeholder.onload = () => resolve();
+                    placeholder.onerror = () => resolve();
+                };
+            });
+        });
+        await Promise.all(imagePromises);
+
+        function drawBarContent(chart, bar, item) {
+            const { ctx, chartArea } = chart;
+            const { base, x, y, height } = bar.getProps(['base', 'x', 'y', 'height']);
+            const barStart = base, barEnd = x, width = barEnd - barStart;
+
+            const visibleBarStart = Math.max(barStart, chartArea.left);
+            const visibleBarEnd = Math.min(barEnd, chartArea.right);
+            const visibleWidth = visibleBarEnd - visibleBarStart;
+            if (visibleWidth < 50) return;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.roundRect(barStart, y - height / 2, width, height, 15);
+            ctx.clip();
+
+            const padding = 15;
+            const logoSize = Math.min(height - padding * 2, 80);
+            if (logoSize <= 0) { ctx.restore(); return; }
+
+            const logoX = visibleBarStart + padding;
+            const logoY = y - logoSize / 2;
+
+            if (logoX + logoSize <= visibleBarEnd) {
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2, 0, Math.PI * 2);
+                ctx.fill();
+                if (item.logoImage && item.logoImage.complete) {
+                    ctx.drawImage(item.logoImage, logoX, logoY, logoSize, logoSize);
+                }
+            }
+
+            const textX = logoX + logoSize + padding;
+            const availableTextWidth = visibleBarEnd - textX;
+            if (availableTextWidth < 50) { ctx.restore(); return; }
+            
+            ctx.fillStyle = barTextColor;
+            ctx.textAlign = 'left';
+            
+            const titleFontSize = 16;
+            const titleLineHeight = titleFontSize * 1.2;
+            const subtitleFontSize = 14;
+            const subtitleLineHeight = subtitleFontSize * 1.3;
+            const detailFontSize = 13;
+            const detailLineHeight = detailFontSize * 1.4;
+            const detailsHeight = item.details ? item.details.length * detailLineHeight : 0;
+            const totalTextBlockHeight = titleLineHeight + subtitleLineHeight + detailsHeight;
+            
+            let currentY = y - (totalTextBlockHeight / 2);
+
+            ctx.textBaseline = 'top';
+            ctx.font = `bold ${titleFontSize}px "Segoe UI"`;
+            ctx.fillText(item.label, textX, currentY);
+            currentY += titleLineHeight;
+
+            ctx.font = `${subtitleFontSize}px "Segoe UI"`;
+            ctx.fillText(item.institution, textX, currentY);
+            currentY += subtitleLineHeight;
+
+            ctx.font = `${detailFontSize}px "Segoe UI"`;
+            if (item.details) {
+                for (const detail of item.details) {
+                    let truncatedText = `• ${detail}`;
+                    if (ctx.measureText(truncatedText).width > availableTextWidth) {
+                        while (ctx.measureText(truncatedText + '...').width > availableTextWidth && truncatedText.length > 1) {
+                            truncatedText = truncatedText.slice(0, -1);
+                        }
+                        truncatedText += '...';
+                    }
+                    ctx.fillText(truncatedText, textX, currentY);
+                    currentY += detailLineHeight;
+                }
+            }
+            ctx.restore();
+        }
+
+        const customTimeAxisPlugin = {
+            id: 'customTimeAxis',
+            afterDatasetsDraw: (chart) => {
+                const { ctx, chartArea, scales: { x } } = chart;
+                if (!chartArea) return;
+                ctx.save();
+                const startYear = new Date(x.min).getFullYear();
+                const endYear = new Date(x.max).getFullYear() + 1;
+                const yLabelPos = chartArea.bottom + 10;
+                for (let year = startYear; year <= endYear; year++) {
+                    const yearStartPixel = x.getPixelForValue(new Date(year, 0, 1));
+                    if (yearStartPixel >= chartArea.left && yearStartPixel <= chartArea.right) {
+                        ctx.beginPath();
+                        ctx.moveTo(yearStartPixel, chartArea.top);
+                        ctx.lineTo(yearStartPixel, chartArea.bottom);
+                        ctx.strokeStyle = gridLineColor;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                    const yearPixelWidth = x.getPixelForValue(new Date(year, 11, 31)) - yearStartPixel;
+                    if (yearPixelWidth < 20) continue;
+                    
+                    const yearLabel = "'" + String(year).slice(-2);
+
+                    ctx.font = `bold 10px 'Segoe UI'`;
+                    const textWidthAt10px = ctx.measureText(yearLabel).width;
+                    const finalFontSize = Math.min((yearPixelWidth / textWidthAt10px) * 10 * 0.9, 64);
+                    
+                    ctx.font = `bold ${finalFontSize}px 'Segoe UI'`;
+                    ctx.fillStyle = yearLabelColor;
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(yearLabel, yearStartPixel, yLabelPos);
+                }
+                ctx.restore();
+            }
+        };
+
+        const barContentPlugin = { id: 'barContentPlugin', afterDatasetsDraw(chart) { chart.getDatasetMeta(0).data.forEach((bar, index) => drawBarContent(chart, bar, allData[index])); } };
+        
+        Chart.register(customTimeAxisPlugin, barContentPlugin, ChartZoom);
+
+        // --- AXIS BOUNDARY CALCULATIONS ---
+        const allDateObjects = allData.flatMap(item => {
+            const endDate = (item.end instanceof Date && !isNaN(item.end)) ? item.end : new Date(item.end);
+            return [new Date(item.start), endDate];
+        });
+
+        const allTimestamps = allDateObjects.map(date => date.getTime());
+        const overallMinDate = new Date(Math.min(...allTimestamps));
+        const overallMaxDate = new Date(Math.max(...allTimestamps));
+        
+        const limitMin = overallMinDate.getTime();
+        const limitMax = overallMaxDate.getTime();
+
+        // ✨ MODIFICATION: Calculate the maximum zoom-out range.
+        const totalTimeSpan = overallMaxDate.getTime() - overallMinDate.getTime();
+        const PADDING_FOR_MAX_ZOOM_MONTHS = 2; // Add a 1-month buffer on each side
+        const maxZoomRange = totalTimeSpan + (1000 * 60 * 60 * 24 * 30 * PADDING_FOR_MAX_ZOOM_MONTHS);
+        
+        const PADDING_MONTHS = 2;
+        const viewMin = new Date(overallMinDate).setMonth(overallMinDate.getMonth() - PADDING_MONTHS);
+        const viewMax = new Date(overallMaxDate).setMonth(overallMaxDate.getMonth() + PADDING_MONTHS);
+        
+        const ctx = document.getElementById('ganttChart').getContext('2d');
+        
+        const ganttChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Array.from({length: numLanes}, (_, i) => i.toString()),
+                datasets: [{
+                    data: allData.map(item => ({ x: [new Date(item.start), new Date(item.end)], y: item.lane.toString() })),
+                    backgroundColor: allData.map(item => item.type === 'work' ? barWorkColor : barEducationColor),
+                    barPercentage: barPercentage,
+                    categoryPercentage: 1.0,
+                    borderRadius: 15,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: { padding: { bottom: xAxisHeight } },
+                scales: {
+                    x: { 
+                        type: 'time', 
+                        min: viewMin,
+                        max: viewMax,
+                        grid: { display: false }, 
+                        ticks: { display: false } 
+                    },
+                    y: { 
+                        type: 'category', 
+                        grid: { display: false }, 
+                        ticks: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: (context) => allData[context[0].dataIndex].label,
+                            label: (context) => {
+                                const item = allData[context.dataIndex];
+                                const startDate = new Date(item.start).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric'});
+                                const endDate = (item.end instanceof Date && !isNaN(item.end)) ? new Date(item.end).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric'}) : 'Present';
+                                return [item.institution, ``, `${startDate} – ${endDate}`];
+                            }
+                        },
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)', titleFont: { size: 16, weight: 'bold' }, bodyFont: { size: 14 },
+                        padding: 10, displayColors: false 
+                    },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'x',
+                            limits: { x: { min: limitMin, max: limitMax } }
+                        },
+                        zoom: {
+                            wheel: { enabled: true },
+                            mode: 'x',
+                            limits: { 
+                                x: { 
+                                    min: limitMin, 
+                                    max: limitMax,
+                                    // ✨ MODIFICATION: Enforce the maximum zoom-out range.
+                                    maxRange: maxZoomRange
+                                }
+                             },
+                            onZoomComplete: ({ chart }) => { chart.update('none'); }
+                        }
+                    }
+                }
+            }
+        });
+        
+        const PAN_SPEED_PIXELS = 5; let panDirection = 0; let animationFrameId = null;
+        const smoothPanLoop = () => {
+            if (panDirection === 0) { animationFrameId = null; return; }
+            ganttChart.pan({ x: panDirection * PAN_SPEED_PIXELS });
+            animationFrameId = requestAnimationFrame(smoothPanLoop);
+        };
+        document.addEventListener('keydown', (event) => {
+            if (event.repeat) return;
+            if (event.key.toLowerCase() === 'a') { panDirection = 1; } 
+            else if (event.key.toLowerCase() === 'd') { panDirection = -1; }
+            if (panDirection !== 0 && animationFrameId === null) { smoothPanLoop(); }
+        });
+        document.addEventListener('keyup', (event) => {
+            const key = event.key.toLowerCase();
+            if ((key === 'a' && panDirection === 1) || (key === 'd' && panDirection === -1)) { panDirection = 0; }
+        });
+    });
+    </script>
+</body>
+</html>
