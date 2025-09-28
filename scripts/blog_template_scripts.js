@@ -36,7 +36,14 @@ function generateOutline() {
         const headerId = header.id || `header-${index}`;
         if (!header.id) header.id = headerId;
 
-        const node = { level, text: header.textContent, id: headerId, children: [] };
+        // Remove any trailing anchor-link text (like the paragraph mark '¶') from header text
+        const anchorLink = header.querySelector('.anchor-link');
+        let headerText = header.textContent;
+        if (anchorLink && anchorLink.textContent) {
+            // Only remove the specific anchor text to avoid trimming legitimate parts of the title
+            headerText = headerText.replace(anchorLink.textContent, '').trim();
+        }
+        const node = { level, text: headerText, id: headerId, children: [] };
 
         while (currentPath[currentPath.length - 1].level >= level) {
             currentPath.pop();
