@@ -641,6 +641,16 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   const ctx = document.getElementById('ganttChart').getContext('2d');
 
+  // Ensure touch gestures (pinch) are delivered to the canvas instead of being intercepted by the browser
+  // This allows the Chart.js zoom plugin to receive pinch events on mobile devices.
+  try {
+    const canvas = ctx.canvas || document.getElementById('ganttChart');
+    // 'none' allows all pointer gestures on the element (including pinch); adjust if you want some native scrolling
+    canvas.style.touchAction = 'none';
+  } catch (e) {
+    // Ignore if setting style fails in some environments
+  }
+
   let zoomedBarIndex = null;
   let previousZoomState = null;
 
@@ -731,7 +741,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             limits: { x: { min: limitMin, max: limitMax } }
           },
           zoom: {
-            wheel: { enabled: true },
+              wheel: { enabled: true },
+              // Enable pinch (two-finger) zoom for touch devices
+              pinch: { enabled: true },
             mode: 'x',
             limits: {
               x: {
