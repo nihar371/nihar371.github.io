@@ -117,6 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="page-nav-button" id="blog-button" aria-label="View Blog Section"><a href="/blog/"><span>Blog</span></a></div>
         <div class="page-nav-button" id="project-button" aria-label="View Project Section"><a href="/project/"><span>Project</span></a></div>
         <div class="page-nav-button" id="about-button" aria-label="View About Section"><a href="/about/"><span>About</span></a></div>
+      </div>
+
+
+      <div class="scrollbar-container">
+        <div class="scrollbar-track">
+          <div class="scrollbar-thumb"></div>
+        </div>
       </div>`;
     mainElement.insertAdjacentHTML("beforebegin", navHTML);
   }
@@ -302,3 +309,190 @@ document.addEventListener("DOMContentLoaded", () => {
   setupProgressBar();
   setupStickyPlayer();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+
+//   // --- 1. ELEMENT SELECTION ---
+//   const scrollbarTrack = document.querySelector('.scrollbar-track');
+//   const scrollbarThumb = document.querySelector('.scrollbar-thumb');
+//   const scrollOriginIcon = document.getElementById('scroll-origin-icon');
+
+//   // --- 2. STATE VARIABLES ---
+//   let isThumbDragging = false;
+//   let isMiddleClickScrolling = false;
+//   let startMouseY, startScrollTop;
+//   let middleClickStartY;
+
+//   // --- 3. CORE SCROLLBAR LOGIC ---
+//   function updateScrollbar() {
+//     const viewportHeight = window.innerHeight;
+//     const contentHeight = document.body.scrollHeight;
+//     const scrollTop = document.documentElement.scrollTop;
+
+//     if (contentHeight <= viewportHeight) {
+//       scrollbarTrack.style.display = 'none';
+//       return;
+//     }
+//     scrollbarTrack.style.display = 'block';
+
+//     const thumbHeight = (viewportHeight / contentHeight) * viewportHeight;
+//     scrollbarThumb.style.height = `${Math.max(thumbHeight, 20)}px`; // Minimum thumb height
+
+//     const maxThumbPosition = viewportHeight - scrollbarThumb.offsetHeight;
+//     const maxScrollableHeight = contentHeight - viewportHeight;
+//     const thumbPosition = (scrollTop / maxScrollableHeight) * maxThumbPosition;
+//     scrollbarThumb.style.transform = `translateY(${thumbPosition}px)`;
+//   }
+
+//   // --- 4. SCROLL TO TOP BUTTON LOGIC ---
+//   function toggleScrollToTopButton() {
+//     if (document.documentElement.scrollTop > 300) {
+//       scrollToTopBtn.classList.add('show');
+//     } else {
+//       scrollToTopBtn.classList.remove('show');
+//     }
+//   }
+
+//   scrollToTopBtn.addEventListener('click', () => {
+//     window.scrollTo({ top: 0, behavior: 'smooth' });
+//   });
+
+//   // --- 5. EVENT LISTENERS ---
+
+//   // Initial updates and on window events
+//   window.addEventListener('resize', updateScrollbar);
+//   window.addEventListener('scroll', () => {
+//     // We only update on scroll if the user isn't actively dragging the thumb
+//     if (!isThumbDragging) {
+//       updateScrollbar();
+//     }
+//     toggleScrollToTopButton();
+//   });
+
+//   // A. Thumb Dragging Logic
+//   scrollbarThumb.addEventListener('mousedown', (e) => {
+//     e.stopPropagation(); // Prevent track click event from firing
+//     isThumbDragging = true;
+//     startMouseY = e.clientY;
+//     startScrollTop = document.documentElement.scrollTop;
+//     document.body.classList.add('dragging');
+//   });
+
+//   // B. Track Click Logic
+//   scrollbarTrack.addEventListener('click', (e) => {
+//     if (e.target === scrollbarTrack) {
+//       const viewportHeight = window.innerHeight;
+//       const contentHeight = document.body.scrollHeight;
+//       const maxScrollableHeight = contentHeight - viewportHeight;
+
+//       const clickY = e.clientY;
+//       const thumbHeight = scrollbarThumb.offsetHeight;
+//       const maxThumbPosition = viewportHeight - thumbHeight;
+
+//       const newThumbPosition = clickY - (thumbHeight / 2);
+//       const scrollRatio = newThumbPosition / maxThumbPosition;
+//       const newScrollTop = scrollRatio * maxScrollableHeight;
+
+//       window.scrollTo({ top: newScrollTop }); // 'smooth' behavior is handled by html{scroll-behavior}
+//     }
+//   });
+
+//   // C. General Mouse and Keyboard Listeners (on document/window)
+//   document.addEventListener('mouseup', () => {
+//     isThumbDragging = false;
+//     document.body.classList.remove('dragging');
+
+//     if (isMiddleClickScrolling) {
+//       isMiddleClickScrolling = false;
+//       scrollOriginIcon.style.display = 'none';
+//     }
+//   });
+
+//   document.addEventListener('mousemove', (e) => {
+//     if (isThumbDragging) {
+//       const dy = e.clientY - startMouseY;
+//       const viewportHeight = window.innerHeight;
+//       const contentHeight = document.body.scrollHeight;
+//       const maxScrollableHeight = contentHeight - viewportHeight;
+//       const maxThumbPosition = viewportHeight - scrollbarThumb.offsetHeight;
+
+//       const scrollRatio = maxScrollableHeight / maxThumbPosition;
+//       const newScrollTop = startScrollTop + (dy * scrollRatio);
+
+//       document.documentElement.scrollTop = Math.max(0, Math.min(newScrollTop, maxScrollableHeight));
+//       updateScrollbar(); // Manually update while dragging
+//     }
+
+//     if (isMiddleClickScrolling) {
+//       const deltaY = e.clientY - middleClickStartY;
+//       // The scroll speed can be adjusted by changing the multiplier
+//       const scrollSpeed = 0.8;
+//       window.scrollBy(0, deltaY * scrollSpeed);
+//       // We reset the start Y to the current position for continuous, smooth scrolling
+//       middleClickStartY = e.clientY;
+//     }
+//   });
+
+//   // D. Keyboard Navigation (PageUp/PageDown)
+//   window.addEventListener('keydown', (e) => {
+//     const viewportHeight = window.innerHeight;
+//     if (e.key === 'PageDown') {
+//       e.preventDefault();
+//       window.scrollBy({ top: viewportHeight * 0.9, behavior: 'smooth' });
+//     } else if (e.key === 'PageUp') {
+//       e.preventDefault();
+//       window.scrollBy({ top: -viewportHeight * 0.9, behavior: 'smooth' });
+//     }
+//   });
+
+//   // E. Middle-Click (Scroll Button) Logic
+//   window.addEventListener('mousedown', (e) => {
+//     // e.button === 1 is the middle mouse button
+//     if (e.button === 1) {
+//       e.preventDefault();
+//       isMiddleClickScrolling = true;
+//       middleClickStartY = e.clientY;
+
+//       scrollOriginIcon.style.top = `${e.clientY}px`;
+//       scrollOriginIcon.style.left = `${e.clientX}px`;
+//       scrollOriginIcon.style.display = 'block';
+//     }
+//   });
+
+//   // --- 6. INITIALIZATION ---
+//   updateScrollbar();
+//   toggleScrollToTopButton();
+// });

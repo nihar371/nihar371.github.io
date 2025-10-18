@@ -8,7 +8,6 @@
 :root {
   --font-family-primary: 'outfit', 'Segoe UI', sans-serif;
   --outfit-font-family: 'outfit', 'Segoe UI', sans-serif;
-  --noto-serift-font-family: 'noto-serift', 'Segoe UI', sans-serif;
 }
 
 /* ---------------------------------------------- General Responsive Section ---------------------------------------------- */
@@ -560,3 +559,80 @@ body {
   height: 24px;
   width: 24px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* :root {
+  --background-dark: #2c2c2c;
+  --background-light: #465460;
+  --scrollbar-track-color: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-color: #888;
+  --scrollbar-thumb-hover-color: #555;
+}
+
+--- Base Setup & Native Scrollbar Hiding ---
+html {
+  This enables smooth scrolling for jumps
+  scroll-behavior: smooth;
+}
+
+body {
+  scrollbar-width: 0px;
+  For Firefox
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  For Chrome, Safari, and Opera
+}
+
+::webkit-scrollbar {
+  width: 0px;
+}
+
+Add a class to change the cursor and prevent text selection while dragging
+body.dragging,
+body.dragging * {
+  cursor: grabbing !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+--- Custom Scrollbar Elements ---
+.scrollbar-track {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 15px;
+  height: 100vh;
+  background: var(--scrollbar-track-color);
+  z-index: 99999;
+}
+
+.scrollbar-thumb {
+  position: absolute;
+  width: 11px;
+  left: 2px;
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: 6px;
+  cursor: grab;
+  transition: background-color 0.2s ease;
+}
+
+.scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover-color);
+} */

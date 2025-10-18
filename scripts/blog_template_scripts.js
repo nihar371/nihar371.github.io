@@ -30,19 +30,45 @@ function generateOutline() {
     const headers = mainContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
     const root = { level: 0, children: [] };
     let currentPath = [root];
+    
+    // 💡 NEW: A map to track used IDs to prevent duplicates
+    const idCounters = new Map();
 
-    headers.forEach((header, index) => {
+    // 💡 NEW: Helper function to create a clean, URL-friendly ID from text
+    const slugify = (text) => {
+        return text.toString().toLowerCase().trim()
+            .replace(/&/g, '-and-')     // Replace & with 'and'
+            .replace(/\s+/g, '-')       // Replace spaces with -
+            .replace(/[^\w\-]+/g, '')   // Remove all non-word chars except -
+            .replace(/\-\-+/g, '-');    // Replace multiple - with single -
+    };
+
+    headers.forEach((header) => {
         const level = parseInt(header.tagName.substring(1), 10);
-        const headerId = header.id || `header-${index}`;
-        if (!header.id) header.id = headerId;
 
         // Remove any trailing anchor-link text (like the paragraph mark '¶') from header text
         const anchorLink = header.querySelector('.anchor-link');
         let headerText = header.textContent;
         if (anchorLink && anchorLink.textContent) {
-            // Only remove the specific anchor text to avoid trimming legitimate parts of the title
             headerText = headerText.replace(anchorLink.textContent, '').trim();
         }
+
+        let baseId = slugify(headerText);
+        let headerId;
+
+        // If this ID has been used before, append a counter
+        if (idCounters.has(baseId)) {
+            const count = idCounters.get(baseId);
+            idCounters.set(baseId, count + 1);
+            headerId = `${baseId}-${count}`;
+        } else {
+            idCounters.set(baseId, 1);
+            headerId = baseId;
+        }
+
+        // Forcefully set the unique ID on the actual header element
+        header.id = headerId;
+
         const node = { level, text: headerText, id: headerId, children: [] };
 
         while (currentPath[currentPath.length - 1].level >= level) {
